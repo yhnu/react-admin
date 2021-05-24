@@ -143,6 +143,7 @@ class EchartsArea extends React.Component {
     mem_option: line_stack_option,
     texture_option: line_stack_option,
     objinscene_option: line_stack_option,
+    render_option: line_stack_option,
   };
 
   componentDidMount() {
@@ -245,6 +246,45 @@ class EchartsArea extends React.Component {
             },
           ],
         },
+        //rendering
+        render_option: {
+          title: {
+            text: "Rendering",
+          },
+          xAxis: {
+            data: r.data["items"]["Frames"],
+          },
+          legend: {
+            data: ["DrawCall", "SetPass", "TotalBatches", "Trangle", "Vert"],
+          },
+          series: [
+            {
+              name: "DrawCall",
+              type: "line",
+              data: r.data["items"]["Render"]["DrawCall"],
+            },
+            {
+              name: "SetPass",
+              type: "line",
+              data: r.data["items"]["Render"]["SetPass"],
+            },
+            {
+              name: "TotalBatches",
+              type: "line",
+              data: r.data["items"]["Render"]["TotalBatches"],
+            },
+            {
+              name: "Trangle",
+              type: "line",
+              data: r.data["items"]["Render"]["Trangle"],
+            },
+            {
+              name: "Vert",
+              type: "line",
+              data: r.data["items"]["Render"]["Vert"],
+            },
+          ],
+        },
       });
     });
   }
@@ -269,6 +309,11 @@ class EchartsArea extends React.Component {
         />
         <ReactEcharts
           option={this.state.objinscene_option}
+          style={{ height: "300px", width: "100%" }}
+          className={"react_for_echarts"}
+        />
+        <ReactEcharts
+          option={this.state.render_option}
           style={{ height: "300px", width: "100%" }}
           className={"react_for_echarts"}
         />
