@@ -111,6 +111,25 @@ const line_stack_option = {
     position: function(pt) {
       return [pt[0], "10%"];
     },
+    axisPointer: {
+      snap: true,
+      label: {
+        show: true,
+      },
+    },
+    formatter: params => {
+      return (
+        `
+          <div>
+            <p>${params[0].name}</p>
+            <p>${params[0].marker}${params[0].seriesName}: ${params[0].value}MB</p>
+            <p>${params[1].marker}${params[1].seriesName}: ${params[1].value}MB</p>
+            <p>${params[2].marker}${params[2].seriesName}: ${params[2].value}MB</p>
+            <p>${params[3].marker}${params[3].seriesName}: ${params[3].value}MB</p>
+          </div>
+        `
+      )
+    },
   },
   legend: {
     data: ["TotalMemory", "MonoMem", "GFXMem", "TextureMem"],
