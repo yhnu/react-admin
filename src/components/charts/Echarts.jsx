@@ -15,17 +15,16 @@ class Echarts extends React.Component {
                 <Row gutter={16}>
                     <Col className="gutter-row" md={24}>
                         <div className="gutter-box">
-                            <Card title="区域图" bordered={false}>
+                            <Card title="基础性能" bordered={false}>
                                 <EchartsArea />
-                            </Card>
+                            </Card>                            
                         </div>
                     </Col>
-                </Row>
-                <Row gutter={16}>
+                </Row>                
+                {/* <Row gutter={16}>
                     <Col className="gutter-row" md={12}>
                         <div className="gutter-box">
                             <Card title="关系图" bordered={false}>
-                                {/*<EchartsGraphnpm />*/}
                                 <EchartsForce />
                             </Card>
                         </div>
@@ -46,7 +45,7 @@ class Echarts extends React.Component {
                             </Card>
                         </div>
                     </Col>
-                </Row>
+                </Row> */}
             </div>
         )
     }
