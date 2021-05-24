@@ -113,7 +113,7 @@ const line_stack_option = {
     },
   },
   legend: {
-    data: ["TotalMemory", "MonoMem", "GFXMem", "TextureMem"],
+    data: ["SysTotalMemory", "TotalMemory", "MonoMem", "GFXMem", "TextureMem"],
   },
   grid: {
     left: "3%",
@@ -141,12 +141,15 @@ class EchartsArea extends React.Component {
   state = {
     fps_option: option,
     mem_option: line_stack_option,
+    texture_option: line_stack_option,
+    objinscene_option: line_stack_option,
   };
 
   componentDidMount() {
-    getCase("1-4zhangjie0521").then((r) => {
+    getCase("0001").then((r) => {
       console.log(r);
       this.setState({
+        // FPS
         fps_option: {
           title: {
             text: "FPS",
@@ -158,6 +161,7 @@ class EchartsArea extends React.Component {
             data: r.data["items"]["FPS"],
           },
         },
+        // 内存
         mem_option: {
           title: {
             text: "Memory",
@@ -166,6 +170,11 @@ class EchartsArea extends React.Component {
             data: r.data["items"]["Frames"],
           },
           series: [
+            {
+              name: "SysTotalMemory",
+              type: "line",
+              data: r.data["items"]["Mem"]["SysTotal"],
+            },
             {
               name: "TotalMemory",
               type: "line",
@@ -188,6 +197,54 @@ class EchartsArea extends React.Component {
             },
           ],
         },
+        // Textures
+        texture_option: {
+          title: {
+            text: "Textures",
+          },
+          xAxis: {
+            data: r.data["items"]["Frames"],
+          },
+          legend: {
+            data: ["Textures Count", "Textures Memory"],
+          },
+          series: [
+            {
+              name: "Textures Count",
+              type: "line",
+              data: r.data["items"]["Texuture"]["TexCount"],
+            },
+            {
+              name: "Textures Memory",
+              type: "line",
+              data: r.data["items"]["Texuture"]["TexMemory"],
+            },
+          ],
+        },
+        //objinscene_option
+        objinscene_option: {
+          title: {
+            text: "Scene",
+          },
+          xAxis: {
+            data: r.data["items"]["Frames"],
+          },
+          legend: {
+            data: ["GameObjInScene", "TotalObjInScene"],
+          },
+          series: [
+            {
+              name: "GameObjInScene",
+              type: "line",
+              data: r.data["items"]["Scene"]["GameObjInScene"],
+            },
+            {
+              name: "TotalObjInScene",
+              type: "line",
+              data: r.data["items"]["Scene"]["TotalObjInScene"],
+            },
+          ],
+        },
       });
     });
   }
@@ -202,6 +259,16 @@ class EchartsArea extends React.Component {
         />
         <ReactEcharts
           option={this.state.mem_option}
+          style={{ height: "300px", width: "100%" }}
+          className={"react_for_echarts"}
+        />
+        <ReactEcharts
+          option={this.state.texture_option}
+          style={{ height: "300px", width: "100%" }}
+          className={"react_for_echarts"}
+        />
+        <ReactEcharts
+          option={this.state.objinscene_option}
           style={{ height: "300px", width: "100%" }}
           className={"react_for_echarts"}
         />
